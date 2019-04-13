@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Projectile
+  - PatrolPoints
+  - pickupable
+  - Ground
+  - ActivePlayer
+  - Shield
   layers:
   - Default
   - TransparentFX
