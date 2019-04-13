@@ -8,7 +8,7 @@ public class EnemyThrow : MonoBehaviour
     // Test script for Marie-Eve and Audrey's milestone 3 project
 
     //private Throw npcthrow;
-    private float DistanceDetect = 3.0f;
+    private float DistanceDetect = 5.0f;
     private GameObject player;
     public GameObject objPrefab;
     private Transform target;
@@ -20,7 +20,10 @@ public class EnemyThrow : MonoBehaviour
     public float throwDistance = 10;
     private AudioSource throwSound;
     
+    private float distance;
+    
     private NavMeshController navmesh;
+    //private float DistanceDetect = 3.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -36,11 +39,11 @@ public class EnemyThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+            distance = Vector3.Distance(transform.position, player.transform.position);
         
 //         float playerPos = new Vector3(player.transform.position, player.transform.rotation)
         
-        navmesh.NavMeshProvider(player.transform.position);
+        //navmesh.NavMeshProvider(player.transform.position);
         
     //if (playerDistance < DistanceDetect)
         //throwObj();
@@ -48,9 +51,12 @@ public class EnemyThrow : MonoBehaviour
 
     private void throwObj() {
 
+    //float distance = Vector3.Distance(transform.position, target.position);
+   
+    if (distance < DistanceDetect) {
         clonedObj = Instantiate(objPrefab, throwPoint.transform.position, throwPoint.transform.rotation);
 
-        float distance = Vector3.Distance(transform.position, target.position);
+        //float distance = Vector3.Distance(transform.position, target.position);
 
         Vector3 heading = target.position - transform.position;
         Vector3 direction = heading / heading.magnitude;
@@ -61,6 +67,7 @@ public class EnemyThrow : MonoBehaviour
             var vel = Projectile.GetProjectileVelocity(maxForce, distance, transform.up, direction);
             throwRb.AddForce(vel, ForceMode.VelocityChange);
             //throwSound.Play();
+        }
 
 
     }
