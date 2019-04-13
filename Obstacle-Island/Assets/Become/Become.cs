@@ -22,7 +22,7 @@ public class Become : MonoBehaviour
     //Action Scripts
     //public Spawner actionSpawn;
     private Pickupper actionPickup;
-//    private Eat actionEat;
+  private Eat actionEat;
 //    private Throw actionThrow;
     
     private GameObject shield;
@@ -147,13 +147,13 @@ public class Become : MonoBehaviour
             actionPickup.PickUp();
             
         }
-//        if (Input.GetKeyDown(KeyCode.E))
-//        {
-//            //call eat function
-//            actionEat = GetComponentInParent<Eat>();
-//            actionEat.EatFood();
-//
-//        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            //call eat function
+            actionEat = GetComponentInParent<Eat>();
+            actionEat.EatFood();
+
+        }
 //        if (Input.GetKeyDown(KeyCode.T))
 //        {
 //            if (actionPickup && actionThrow && actionPickup.IsHoldingObject())
