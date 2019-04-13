@@ -19,6 +19,8 @@ public class EnemyThrow : MonoBehaviour
     public float maxForce = 10;
     public float throwDistance = 10;
     private AudioSource throwSound;
+    
+    private NavMeshController navmesh;
 
     // Start is called before the first frame update
     void Start()
@@ -27,15 +29,19 @@ public class EnemyThrow : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("ActivePlayer");
         target = player.transform;
         InvokeRepeating ("throwObj", 1, 1);
+        navmesh = this.GetComponent<NavMeshController>();
         //throwSound = GetComponent<AudioSource>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
             float playerDistance = Vector3.Distance(transform.position, player.transform.position);
-
+        
+//         float playerPos = new Vector3(player.transform.position, player.transform.rotation)
+        
+        navmesh.NavMeshProvider(player.transform.position);
+        
     //if (playerDistance < DistanceDetect)
         //throwObj();
     }

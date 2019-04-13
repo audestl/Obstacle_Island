@@ -44,17 +44,21 @@ public class Become : MonoBehaviour
         //setting the audio sound component
         setAudioSource();
         
-            shield = GameObject.FindWithTag("Shield");
+    shield = GameObject.FindWithTag("Shield");
+        if(shield != null) {
     render = shield.GetComponent<MeshRenderer>();
     collider = shield.GetComponent<Collider>();
     shieldActivated = false;
+        }
     }
     //we want to update every frame
     void Update()
     {
+        if(shield != null) {
         if (render.enabled == true && collider.enabled == true)
         shieldActivated = true;
         else shieldActivated = false;
+        }
         
         PlayerActions();
 
@@ -92,9 +96,9 @@ public class Become : MonoBehaviour
         }
         
               // KeyCode for Marie-Eve and Audrey's milestone      
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            //call shield
+            if(shield != null) {
             print(shieldActivated);
 
             if (!shieldActivated){
@@ -103,6 +107,7 @@ public class Become : MonoBehaviour
             } else {
             render.enabled = false;
             collider.enabled = false; 
+                }
             }
 
         }
@@ -135,13 +140,13 @@ public class Become : MonoBehaviour
         {
             //call spawn function
         }
-//        if (Input.GetKeyDown(KeyCode.P))
-//        {
-//            //call pickup function
-//            actionPickup = GetComponentInParent<Pickupper>();
-//            actionPickup.PickUp();
-//            
-//        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            //call pickup function
+            actionPickup = GetComponentInParent<Pickupper>();
+            actionPickup.PickUp();
+            
+        }
 //        if (Input.GetKeyDown(KeyCode.E))
 //        {
 //            //call eat function
