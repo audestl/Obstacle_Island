@@ -8,29 +8,30 @@ public class NavMeshController : MonoBehaviour
     private RigidBodyController locomotionCtl;
     private Rigidbody rigidb;
     Vector3 direction;
+    
+    public float rotationSpeed = 10f;
 
     private Vector3 destination;
 
     private void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
-        locomotionCtl = GetComponent<RigidBodyController>();
-        rigidb = GetComponent<Rigidbody>();
-        agent.Warp(this.transform.position);
+//        locomotionCtl = GetComponent<RigidBodyController>();
+//        rigidb = GetComponent<Rigidbody>();
+        //agent.Warp(this.transform.position);
        //agent.SetDestination(agent.transform.position);
-        destination = agent.transform.position;
-            agent.updateRotation = false;
+//        destination = agent.transform.position;
+//            agent.updateRotation = false;
     }
 
 
 
-    public void NavMeshProvider(GameObject target)
+    public void NavMeshProvider(Transform target)
     {
 
-       // agent.SetDestination(destination);
+        //agent.transform.LookAt(target);
         
-        agent.updateRotation = true;
-        agent.transform.LookAt(target.transform);
+        RotateTowards(target);
         
 //        if (agent.velocity.sqrMagnitude > Mathf.Epsilon)
 //{
@@ -43,7 +44,11 @@ public class NavMeshController : MonoBehaviour
 
     }
     
-  
+         private void RotateTowards (Transform _target) {
+            Vector3 direction = (_target.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+     }
 
 //
 //    void FixedUpdate()

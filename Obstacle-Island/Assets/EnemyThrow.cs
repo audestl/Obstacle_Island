@@ -39,11 +39,11 @@ public class EnemyThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            distance = Vector3.Distance(transform.position, player.transform.position);
+            distance = Vector3.Distance(transform.position, target.position);
         
 //         float playerPos = new Vector3(player.transform.position, player.transform.rotation)
         
-        navmesh.NavMeshProvider(player);
+        if (distance < DistanceDetect) navmesh.NavMeshProvider(target);
         
     //if (playerDistance < DistanceDetect)
         //throwObj();
@@ -71,15 +71,5 @@ public class EnemyThrow : MonoBehaviour
 
 
     }
-    
-    private void onTriggerEnter(Collider col) {
-        if (col.tag == "Ground") {
-            print("floor");
-        }
-        
-    }
-
-
-
 
 }
