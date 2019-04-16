@@ -186,7 +186,7 @@ public class Become : MonoBehaviour
 
     private void CreateRay()
     {
-        //create a ray that is between the camera position and the positoin of the object the mouse clicked on
+        //create a ray that is between the camera position and the position of the object the mouse clicked on
         Ray rayEnd = fpsCam.ScreenPointToRay(Input.mousePosition);
 
         //if the mouse clicks on the gameobject and that gameobject has a CharacterController as a component, meaning that object is a player

@@ -150,35 +150,35 @@ InputManager:
     axis: 2
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Horizontal
+    m_Name: HorizontalCam
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
+    negativeButton: left
+    positiveButton: right
+    altNegativeButton: j
+    altPositiveButton: l
     gravity: 0
     dead: 0.19
     sensitivity: 1
     snap: 0
     invert: 0
-    type: 2
+    type: 0
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Vertical
+    m_Name: VerticalCam
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: 
-    positiveButton: 
-    altNegativeButton: 
-    altPositiveButton: 
+    negativeButton: down
+    positiveButton: up
+    altNegativeButton: k
+    altPositiveButton: i
     gravity: 0
     dead: 0.19
     sensitivity: 1
     snap: 0
     invert: 1
-    type: 2
+    type: 0
     axis: 1
     joyNum: 0
   - serializedVersion: 3
