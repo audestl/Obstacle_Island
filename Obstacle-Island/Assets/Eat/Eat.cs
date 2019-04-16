@@ -44,11 +44,6 @@ public class Eat : MonoBehaviour
         
         //initialPos = shroom.transform.position;
     }
-    
-    void FixedUpdate()
-    {
-        //print(small);
-    }
 
     public void EatFood()
         
@@ -69,7 +64,6 @@ public class Eat : MonoBehaviour
                     StartCoroutine(EatTheObj(child, foodSize, playerSize, duration));
                 }
             }
-
         }
     }
     
