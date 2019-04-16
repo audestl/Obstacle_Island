@@ -126,17 +126,17 @@ public class Become : MonoBehaviour
                 CamMode++;
             StartCoroutine(CamChange());
         }
-//        if (Input.GetKeyDown(KeyCode.U))
-//        {
-//            if (actionPickup && actionPickup.IsHoldingObject())
-//            {
-//                Usable usable = actionPickup.HeldObject().GetComponent<Usable>();
-//                if (usable)
-//                {
-//                    usable.Use();
-//                }
-//            }
-//        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (actionPickup && actionPickup.IsHoldingObject())
+            {
+                Usable usable = actionPickup.HeldObject().GetComponent<Usable>();
+                if (usable)
+                {
+                    usable.Use();
+                }
+            }
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             //call spawn function
@@ -149,6 +149,15 @@ public class Become : MonoBehaviour
             actionPickup.PickUp();
             }
             
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+
+                //call pickup function
+                actionPickup = GetComponentInParent<Pickupper>();
+                actionPickup.PickUp();
+
+
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
