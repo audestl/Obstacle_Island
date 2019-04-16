@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class ObjDestroy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-     StartCoroutine(CountDown());
+        public void OnCollisionEnter(Collision col) {
+            //print("aouch");
+        
+        if (col.gameObject.tag == "ActivePlayer") {
+           // print("activeplayer");
+            Destroy(this.gameObject);
+        }
+        
     }
-
+    
     private IEnumerator CountDown() {
 
         yield return new WaitForSeconds(2.0f);

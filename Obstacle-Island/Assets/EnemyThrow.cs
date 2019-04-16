@@ -43,7 +43,7 @@ public class EnemyThrow : MonoBehaviour
         
 //         float playerPos = new Vector3(player.transform.position, player.transform.rotation)
         
-        //navmesh.NavMeshProvider(player.transform.position);
+        navmesh.NavMeshProvider(player);
         
     //if (playerDistance < DistanceDetect)
         //throwObj();
@@ -70,6 +70,13 @@ public class EnemyThrow : MonoBehaviour
         }
 
 
+    }
+    
+    private void onTriggerEnter(Collider col) {
+        if (col.tag == "Ground") {
+            print("floor");
+        }
+        
     }
 
 

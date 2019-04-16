@@ -54,7 +54,7 @@ public void StartRepeling() {
     if (distance < DistanceDetect) {
     Vector3 dirToPlayer = transform.position - player.transform.position;
     Vector3 newPos = transform.position + dirToPlayer;
-    controller.NavMeshProvider(newPos);
+    //controller.NavMeshProvider(newPos);
     }
 }    
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*====================================================================================
 EAT Script
@@ -23,40 +24,72 @@ public class Eat : MonoBehaviour
     private Pickupper myFood;
     Transform foodLoc;
     private GameObject player;
+    Vector3 foodSize;
+    Vector3 playerSize;
+    bool small;
+    
+    private Vector3 initialPos;
+    public GameObject initialObj;
+    
+    //Vector3 initialPos;
+    
 
+    void Start() {
+        //playerSize = player.transform.localScale;
+        small = false;
+        player = GameObject.FindWithTag("ActivePlayer");
+        playerSize = player.transform.localScale;
+        
+        initialPos = initialObj.transform.position;
+        
+        //initialPos = shroom.transform.position;
+    }
+    
     void FixedUpdate()
     {
-        player = GameObject.FindWithTag("ActivePlayer");
+        //print(small);
     }
 
     public void EatFood()
-    {
+        
+    { 
         myFood = GetComponentInParent<Pickupper>();
         
 
         if (myFood.IsHoldingObject())
         {
-
             foodLoc = myFood.grabPoint;
             foreach (Transform child in foodLoc)
             {
                 Eatable eatable = child.GetComponent<Eatable>();
+                foodSize = child.gameObject.transform.localScale;
                 if (child.gameObject != null && eatable != null)
                 {
-                    Vector3 foodSize = child.gameObject.transform.localScale;
-                    Vector3 playerSize = player.transform.localScale;
-                    print(playerSize);
+                
                     StartCoroutine(EatTheObj(child, foodSize, playerSize, duration));
                 }
             }
 
         }
     }
+    
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag == "Blade" || other.gameObject.tag == "Projectile") {
+            if(small) {
+            //print("hit blade");
+            StartCoroutine(ReturnNormal(playerSize, duration));
+            } else {
+                SceneManager.LoadScene("ObstacleIsland");
+            }
+        }
+        
+    }
 
 
     public IEnumerator EatTheObj(Transform _obj, Vector3 _foodSize, Vector3 _playerSize, float _time)
    {
 
+        
         float i = 0.0f;
         float f= 0.0f;
         float eatingRate = (1.0f / _time) * speed;
@@ -66,6 +99,8 @@ public class Eat : MonoBehaviour
         {
             i += Time.deltaTime * eatingRate;
             _obj.transform.localScale = Vector3.Lerp(_foodSize, _foodSize / 100, i);
+            
+            
 //            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale - _playerSize / 100, i);
             yield return null;
         }
@@ -75,28 +110,54 @@ public class Eat : MonoBehaviour
         {
             f += Time.deltaTime * playerRate;
 //            _obj.transform.localScale = Vector3.Lerp(_foodSize, _foodSize / 2, i);
-            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale - _playerSize / 50, f);
+            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale - _playerSize / 60, f);
             yield return null;
         }
         if (f >= 1.0f)
-        {  
-            yield return StartCoroutine(FinishEating(_obj));
+            {  
+            yield return StartCoroutine(FinishEating(_obj, _foodSize));
+            }
         }
-        }
-
-                }
-                       
+    }
     
-    //yield return StartCoroutine(FinishEating(_obj));
+        public IEnumerator ReturnNormal(Vector3 _playerSize, float _time) {
+            float i = 0.0f;
+            float playerRate = (1.0f / _time) * playerSpeed;
+            
+         while (i <= 1.0f) {
+            i +=Time.deltaTime * playerRate;
+            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale + _playerSize / 100, i);
+            yield return null;
+        } if (i >= 1.0f) small = false;
+    }
 
 
-    public IEnumerator FinishEating(Transform _obj)
+    public IEnumerator FinishEating(Transform _obj, Vector3 _foodSize)
     {
         //_obj.GetComponent<Rigidbody>().useGravity = true;
         _obj.parent = null;
-        //myFood.DigestTheFood();
-        Destroy(_obj.gameObject, duration/3);
+        myFood.DigestTheFood();
+        
+        //Destroy(_obj.gameObject);
+        resetShroom(_obj.gameObject, _foodSize);
+        
         yield return null;
+        small = true;
+    }
+    
+    public IEnumerator FinishGrow() {
+        //small = false;
+        yield return null;
+    }
+    
+    private void resetShroom(GameObject shroom, Vector3 size) {
+        shroom.transform.position = initialPos;
+        shroom.transform.localScale += new Vector3(0.3f, 0.3f, 0.3f);
+    }
+    
+    public bool isSmall() {
+        print(small);
+        return small;
     }
    
 }

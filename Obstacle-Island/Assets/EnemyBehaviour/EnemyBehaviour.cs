@@ -55,7 +55,7 @@ public class EnemyBehaviour : MonoBehaviour
                 return;
    
         // Function from NavMeshController script, we are feeding it the PatrolPoints' Vector3 position
-        controller.NavMeshProvider(PatrolPoints[currentPatrolPoint].position);
+        //controller.NavMeshProvider(PatrolPoints[currentPatrolPoint].position);
 
             // Choose the next point in the array as the destination, cycling to the start if necessary.
             currentPatrolPoint = (currentPatrolPoint + 1) % PatrolPoints.Length;
@@ -77,10 +77,10 @@ public class EnemyBehaviour : MonoBehaviour
             { 
                 Vector3 dirToPlayer = transform.position - player.transform.position;
                 Vector3 newPos = transform.position + dirToPlayer;
-                controller.NavMeshProvider(newPos);
+                //controller.NavMeshProvider(newPos);
             } else // If player hasn't picked up object, enemy will run towards player and chase him
             {                     
-                controller.NavMeshProvider(player.transform.position);
+                //controller.NavMeshProvider(player.transform.position);
             }
               
         } else // If the player is too far from enemy, he patrols

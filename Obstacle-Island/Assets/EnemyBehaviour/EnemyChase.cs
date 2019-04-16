@@ -53,7 +53,7 @@ public void StartChasing() {
     float distance = Vector3.Distance(transform.position, player.transform.position);
    
     if (distance < DistanceDetect) {
-   controller.NavMeshProvider(player.transform.position); 
+   //controller.NavMeshProvider(player.transform.position); 
    agent.stoppingDistance = 2f;
     }
 }    

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 114077228880573962}
   - component: {fileID: 2348502444606591969}
   - component: {fileID: 7739814405112857099}
+  - component: {fileID: 4743896058648530964}
   m_Layer: 0
   m_Name: MushroomMonster
   m_TagString: pickupable
@@ -82,7 +83,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!136 &7739814405112857099
 CapsuleCollider:
@@ -98,6 +99,18 @@ CapsuleCollider:
   m_Height: 4.674994
   m_Direction: 1
   m_Center: {x: 0.036496915, y: 1.676131, z: 1.0070961e-15}
+--- !u!114 &4743896058648530964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382258774799692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 806048e74393f0349866ef59b27deb54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1643898645384686
 GameObject:
   m_ObjectHideFlags: 0

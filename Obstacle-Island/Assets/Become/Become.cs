@@ -29,10 +29,11 @@ public class Become : MonoBehaviour
     private MeshRenderer render;
     private Collider collider;
     private bool shieldActivated;
-
+    
 
     void Start()
     {
+        actionEat = GetComponentInParent<Eat>();
         fpsCam = GetComponent<Camera>();
         firstCamPosition = GetComponent<Transform>().localPosition;
         thirdCamPosition = firstCamPosition + new Vector3(0,5,-5);
@@ -142,15 +143,17 @@ public class Become : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
+            if (!actionEat.isSmall()) {
             //call pickup function
             actionPickup = GetComponentInParent<Pickupper>();
             actionPickup.PickUp();
+            }
             
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
             //call eat function
-            actionEat = GetComponentInParent<Eat>();
+            
             actionEat.EatFood();
 
         }

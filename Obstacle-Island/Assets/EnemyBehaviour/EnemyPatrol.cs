@@ -65,7 +65,7 @@ public class EnemyPatrol : MonoBehaviour
                 return;
    
         // Function from NavMeshController script, we are feeding it the PatrolPoints' Vector3 position
-        controller.NavMeshProvider(PatrolPoints[currentPatrolPoint].position);
+        //controller.NavMeshProvider(PatrolPoints[currentPatrolPoint].position);
 
             // Choose the next point in the array as the destination, cycling to the start if necessary.
             currentPatrolPoint = (currentPatrolPoint + 1) % PatrolPoints.Length;

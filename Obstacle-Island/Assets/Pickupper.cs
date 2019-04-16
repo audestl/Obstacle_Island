@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -49,7 +49,7 @@ public class Pickupper : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "pickupable")
-        {
+        { 
             pickups.Add(other.gameObject);
         }
     }
@@ -71,6 +71,7 @@ public class Pickupper : MonoBehaviour
     //IE Input.GetButtonDown(myButtonName) {Pickupper1.buttonCheck()}
     public void ButtonCheck()
     {
+        //print("bla");
         if (buttonDown)
         {
             buttonDown = false;
@@ -90,28 +91,28 @@ public class Pickupper : MonoBehaviour
 
         //If there are more than one pickupables in range,
         //This will determine and select the nearest one.
-        if (pickups.Count > 1 && buttonDown == false)
-        {
-            Vector3 currentPosition = this.transform.position;
-            float nearestDist = Mathf.Infinity;
-
-            foreach (GameObject obj in pickups){
-                if (obj.gameObject != null)
-                {
-                    Vector3 dist = obj.transform.position - currentPosition;
-                    float distSqr = dist.sqrMagnitude;
-                    if (distSqr < nearestDist)
-                    {
-                        nearestDist = distSqr;
-                        pickup = obj;
-                    }
-                }
-            }
-
-            buttonDown = true;
-            inRange = true;
-            isHolding = true;
-        }
+//        if (pickups.Count > 1 && buttonDown == false)
+//        {
+//            Vector3 currentPosition = this.transform.position;
+//            float nearestDist = Mathf.Infinity;
+//
+//            foreach (GameObject obj in pickups){
+//                if (obj.gameObject != null)
+//                {
+//                    Vector3 dist = obj.transform.position - currentPosition;
+//                    float distSqr = dist.sqrMagnitude;
+//                    if (distSqr < nearestDist)
+//                    {
+//                        nearestDist = distSqr;
+//                        pickup = obj;
+//                    }
+//                }
+//            }
+//
+//            buttonDown = true;
+//            inRange = true;
+//            isHolding = true;
+//        }
      }
 
     //Debug button fire
