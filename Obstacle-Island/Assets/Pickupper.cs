@@ -29,7 +29,7 @@ public class Pickupper : MonoBehaviour
         inRange = false;
         buttonDown = false;
         isHoldingKey = false;
-        pickup.GetComponent<Rigidbody>().useGravity = true;
+        
     }
 
     // Update is called once per frame
@@ -42,6 +42,7 @@ public class Pickupper : MonoBehaviour
             
             if (inRange && pickup.gameObject != null)
             {
+                
                 //pickup.GetComponent<Rigidbody>().useGravity = false;
                 pickup.transform.position = grabPoint.transform.position;
                 pickup.transform.parent = grabPoint.transform;

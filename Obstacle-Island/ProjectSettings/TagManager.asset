@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - pickupable
+  - Projectile
+  - Blade
+  - Shield
+  - ShieldTimer
+  - ActivePlayer
   layers:
   - Default
   - TransparentFX
