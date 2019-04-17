@@ -1,4 +1,4 @@
-﻿// Simple break into primitive shapes
+// Simple break into primitive shapes
 // No need to set rigidbody component to the object when this script is used
 // Editables:
 // - Size and quantity of pieces
@@ -46,7 +46,7 @@ public class Break : MonoBehaviour {
 
     public void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Breaker") || other.gameObject.CompareTag("Projectile"))
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Shield") || other.gameObject.CompareTag("Projectile"))
         {
             explode();
         }
@@ -85,6 +85,7 @@ public class Break : MonoBehaviour {
                 // Add explosion force to this body with defined parameters
                 rigbod.AddExplosionForce(Random.Range(minExplosionForce, maxExplosionForce), transform.position, explosionRadius, explosionUpward);
             }
+        hit.GetComponent<Collider>().enabled = false;
         }
     }
 

@@ -29,19 +29,21 @@ public class Pickupper : MonoBehaviour
         inRange = false;
         buttonDown = false;
         isHoldingKey = false;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-print(isHoldingKey);
+
         //if someone presses the button this parents the pickupable to the selected empty.
         if (buttonDown)
         {
             
             if (inRange && pickup.gameObject != null)
             {
-                pickup.GetComponent<Rigidbody>().useGravity = false;
+                
+                //pickup.GetComponent<Rigidbody>().useGravity = false;
                 pickup.transform.position = grabPoint.transform.position;
                 pickup.transform.parent = grabPoint.transform;
                 
@@ -59,15 +61,23 @@ print(isHoldingKey);
 
     //Passively checks for objects within the trigger's range.
     //NOTE: This is the trigger you should have set up.
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.transform.tag == "pickupable")
         { 
             pickups.Add(other.gameObject);
         }
+        else if (other.transform.tag == "Blade") {
+            if (isHoldingKey) {
+          buttonDown = false;
+            pickup.GetComponent<Rigidbody>().useGravity = true;
+            pickup.transform.parent = null;
+            isHoldingKey = false;
+            }
+        }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision other)
     {
        if (other.transform.tag == "pickupable")
         {
@@ -90,7 +100,8 @@ print(isHoldingKey);
             pickup.GetComponent<Rigidbody>().useGravity = true;
             pickup.transform.parent = null;
             isHolding = false;
-            isHoldingKey = false;
+            //isHoldingKey = false;
+            print("hellow");
             return;
         }
 

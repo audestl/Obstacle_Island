@@ -37,8 +37,9 @@ public class Eat : MonoBehaviour
     private MeshRenderer render;
     private Collider collider;
     
-    private bool isChanging;
+    private ObjDestroy script;
     
+    private bool isChanging;
     
     //Vector3 initialPos;
     
@@ -88,27 +89,26 @@ public class Eat : MonoBehaviour
     }
     
     private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Projectile") {
-            if (render.enabled == false && collider.enabled == false) {
-            if(small && !isChanging) {
-            //print("hit blade");
-            StartCoroutine(ReturnNormal(playerSize, duration));
-            } else if (!small) {
-                this.transform.position = initialPosPlayer;
-            }
-        } else return;
-    } 
+  script = other.gameObject.GetComponent<ObjDestroy>();
         
-    }
-    
-    private void OnTriggerEnter(Collider other) {
-        if(other.gameObject.tag == "Blade") {
+        if ((other.gameObject.tag == "Projectile" && script.objIsActive()) || other.gameObject.tag == "Blade") {
+            
             if (render.enabled == false && collider.enabled == false) {
-            if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration));
-             else if (!small) this.transform.position = initialPosPlayer;        
-            }
-        }
+            if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration)); 
+            else if (!small) this.transform.position = initialPosPlayer;
+             
+            } else return;
+        } 
     }
+//    
+//    private void OnCollisionEnter(Collision other) {
+//        if(other.gameObject.tag == "Blade") {
+//            if (render.enabled == false && collider.enabled == false) {
+//            if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration));
+//             else if (!small) this.transform.position = initialPosPlayer;        
+//            }
+//        }
+//    }
 
 
     public IEnumerator EatTheObj(Transform _obj, Vector3 _foodSize, Vector3 _playerSize, float _time)
@@ -184,6 +184,7 @@ public class Eat : MonoBehaviour
     private void resetShroom(GameObject shroom, Vector3 size) {
         shroom.transform.position = initialPos;
         shroom.transform.localScale += new Vector3(0.86f, 0.86f, 0.86f);
+        shroom.transform.rotation = Quaternion.Euler(0, 30, 0);
     }
     
         

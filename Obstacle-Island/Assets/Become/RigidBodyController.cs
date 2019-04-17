@@ -33,6 +33,7 @@ public class RigidBodyController : MonoBehaviour
         rotateXAxis = characterBod.transform.eulerAngles.x;
         rotateYAxis = characterBod.transform.eulerAngles.y;
         jump = new Vector3(0.0f, 2.0f, 0.0f);
+        characterBod.constraints = RigidbodyConstraints.FreezePositionY;
     }
     
     void Update() {
