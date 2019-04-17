@@ -3,19 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - ActivePlayer
-  - Ground
-  - Shield
-  - Projectile
-  - PatrolPoints
-  - pickupable
-  - Blade
-<<<<<<< HEAD
-  - Breaker
-=======
-  - ShieldTimer
->>>>>>> 86b7cfa92d8d1a804d91f1394c35f0adbfad2f60
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -25,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
-  - Player
-  - Walls
+  - 
+  - 
+  - 
   - 
   - 
   - 
