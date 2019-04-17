@@ -9,6 +9,7 @@ public class RigidBodyController : MonoBehaviour
     private Rigidbody characterBod;
     public float speed = 2f;
     public float jumpSpeed = 5f;
+     public Vector3 jump;
 
     private float rotateXAxis = 0.0f;
     private float rotateYAxis = 0.0f;
@@ -21,6 +22,7 @@ public class RigidBodyController : MonoBehaviour
         characterBod = GetComponent<Rigidbody>();
         rotateXAxis = characterBod.transform.eulerAngles.x;
         rotateYAxis = characterBod.transform.eulerAngles.y;
+        jump = new Vector3(0.0f, 2.0f, 0.0f);
     }
 
     public void Locomote(Vector3 direction)
@@ -62,7 +64,7 @@ public class RigidBodyController : MonoBehaviour
     {
         if (isGrounded)
         {
-            characterBod.AddForce(new Vector3(0, 2, 0) * jumpSpeed, ForceMode.Impulse);
+            characterBod.AddForce(jump * jumpSpeed, ForceMode.Impulse);
             isGrounded = false;
         }
        

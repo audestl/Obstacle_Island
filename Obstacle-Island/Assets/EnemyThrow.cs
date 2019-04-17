@@ -10,7 +10,7 @@ public class EnemyThrow : MonoBehaviour
     //private Throw npcthrow;
     public float meleeRange = 5f;
     
-    private GameObject player;
+    public GameObject player;
     public GameObject objPrefab;
     private Transform target;
 
@@ -26,7 +26,7 @@ public class EnemyThrow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("ActivePlayer");
+        //player = GameObject.FindWithTag("ActivePlayer");
         target = player.transform;
         InvokeRepeating("throwObj", 1, 1);
         navmesh = this.GetComponent<NavMeshController>();
@@ -41,6 +41,7 @@ public class EnemyThrow : MonoBehaviour
     private void throwObj() {
 
      if (IsInMeleeRangeOf(target)) {
+         
          float distance = Vector3.Distance(transform.position, target.position);
          
         clonedObj = Instantiate(objPrefab, throwPoint.transform.position, throwPoint.transform.rotation);

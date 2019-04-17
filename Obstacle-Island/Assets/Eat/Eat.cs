@@ -29,7 +29,9 @@ public class Eat : MonoBehaviour
     bool small;
     
     private Vector3 initialPos;
+    private Vector3 initialPosPlayer;
     public GameObject initialObj;
+    public GameObject initialPlayer;
     
     private GameObject shield;
     private MeshRenderer render;
@@ -40,6 +42,7 @@ public class Eat : MonoBehaviour
     
 
     void Start() {
+        myFood = GetComponentInParent<Pickupper>();
         
           shield = GameObject.FindWithTag("Shield");
     render = shield.GetComponent<MeshRenderer>();
@@ -47,10 +50,11 @@ public class Eat : MonoBehaviour
         
         //playerSize = player.transform.localScale;
         small = false;
-        player = GameObject.FindWithTag("ActivePlayer");
-        playerSize = player.transform.localScale;
+        //player = GameObject.FindWithTag("ActivePlayer");
+        playerSize = this.transform.localScale;
         
         initialPos = initialObj.transform.position;
+        initialPosPlayer = initialPlayer.transform.position;
         
         //initialPos = shroom.transform.position;
     }
@@ -58,7 +62,7 @@ public class Eat : MonoBehaviour
     public void EatFood()
         
     { 
-        myFood = GetComponentInParent<Pickupper>();
+    
         
 
         if (myFood.IsHoldingObject())
@@ -78,17 +82,32 @@ public class Eat : MonoBehaviour
     }
     
     private void OnCollisionEnter(Collision other) {
-        if (other.gameObject.tag == "Blade" || other.gameObject.tag == "Projectile") {
+        if (other.gameObject.tag == "Projectile") {
             if (render.enabled == false && collider.enabled == false) {
             if(small) {
             //print("hit blade");
             StartCoroutine(ReturnNormal(playerSize, duration));
             } else {
-                SceneManager.LoadScene("ObstacleIsland");
+                this.transform.position = initialPosPlayer;
+                //myFood.grabPoint = null;
             }
         } else return;
     } 
         
+    }
+    
+    private void OnTriggerEnter(Collider other) {
+        if(other.gameObject.tag == "Blade") {
+            if (render.enabled == false && collider.enabled == false) {
+            if(small) {
+            //print("hit blade");
+            StartCoroutine(ReturnNormal(playerSize, duration));
+            } else {
+                this.transform.position = initialPosPlayer;
+                //myFood.grabPoint = null;
+            }
+        } else return; 
+        }
     }
 
 
@@ -114,7 +133,7 @@ public class Eat : MonoBehaviour
         {
             f += Time.deltaTime * playerRate;
 //            _obj.transform.localScale = Vector3.Lerp(_foodSize, _foodSize / 2, i);
-            if (!small) player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale - _playerSize / 60, f);
+            if (!small) this.transform.localScale = Vector3.Lerp(transform.localScale, this.transform.localScale - _playerSize / 60, f);
             yield return null;
         }
         if (f >= 1.0f)
@@ -130,7 +149,7 @@ public class Eat : MonoBehaviour
             
          while (i <= 1.0f) {
             i +=Time.deltaTime * playerRate;
-            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale + _playerSize / 110, i);
+            this.transform.localScale = Vector3.Lerp(transform.localScale, this.transform.localScale + _playerSize / 110, i);
             yield return null;
         } if (i >= 1.0f) {
              small = false;

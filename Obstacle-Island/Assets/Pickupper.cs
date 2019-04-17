@@ -34,7 +34,6 @@ public class Pickupper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(pickup);
 
         //if someone presses the button this parents the pickupable to the selected empty.
         if (buttonDown)

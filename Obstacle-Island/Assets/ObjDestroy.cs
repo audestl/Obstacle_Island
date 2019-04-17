@@ -7,7 +7,7 @@ public class ObjDestroy : MonoBehaviour
         public void OnCollisionEnter(Collision col) {
             //print("aouch");
         
-        if (col.gameObject.tag == "ActivePlayer") {
+        if (col.gameObject.tag == "ActivePlayer" || col.gameObject.tag == "Ground") {
            // print("activeplayer");
             Destroy(this.gameObject);
         }
