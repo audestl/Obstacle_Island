@@ -21,28 +21,45 @@ public class Pickupper : MonoBehaviour
     private bool inRange;
     private bool buttonDown;
     private bool isHolding;
-
+    private bool isHoldingKey;
+    
     // Start is called before the first frame update
     void Start()
     {
         inRange = false;
         buttonDown = false;
+        isHoldingKey = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        print(pickup);
+
         //if someone presses the button this parents the pickupable to the selected empty.
         if (buttonDown)
         {
+            
             if (inRange && pickup.gameObject != null)
             {
                 pickup.GetComponent<Rigidbody>().useGravity = false;
                 pickup.transform.position = grabPoint.transform.position;
                 pickup.transform.parent = grabPoint.transform;
+                
+                           //foodLoc = this.grabPoint;
+            foreach (Transform child in grabPoint)
+                if (child.name == "key") isHoldingKey = true;
             }
-        }   
+            
+
+
+        } 
+        
+        
+       //myFood = GetComponentInParent<Pickupper>();
+        
     }
+    
 
     //Passively checks for objects within the trigger's range.
     //NOTE: This is the trigger you should have set up.
@@ -51,6 +68,10 @@ public class Pickupper : MonoBehaviour
         if (other.transform.tag == "pickupable")
         { 
             pickups.Add(other.gameObject);
+//            if (other.gameObject.name == "key") 
+//            { isHoldingKey = true;
+//             print("heldkey");
+//            }
         }
     }
 
@@ -87,6 +108,8 @@ public class Pickupper : MonoBehaviour
             buttonDown = true;
             inRange = true;
             isHolding = true;
+            //isHoldingKey = false;
+            
         }
 
         //If there are more than one pickupables in range,
@@ -124,6 +147,10 @@ public class Pickupper : MonoBehaviour
     public bool IsHoldingObject()
     {
         return isHolding;
+    }
+    
+    public bool hasKey() {
+        return isHoldingKey;
     }
 
     public GameObject HeldObject()

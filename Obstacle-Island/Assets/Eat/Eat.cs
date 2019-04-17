@@ -31,10 +31,20 @@ public class Eat : MonoBehaviour
     private Vector3 initialPos;
     public GameObject initialObj;
     
+    private GameObject shield;
+    private MeshRenderer render;
+    private Collider collider;
+    
+    
     //Vector3 initialPos;
     
 
     void Start() {
+        
+          shield = GameObject.FindWithTag("Shield");
+    render = shield.GetComponent<MeshRenderer>();
+    collider = shield.GetComponent<Collider>();
+        
         //playerSize = player.transform.localScale;
         small = false;
         player = GameObject.FindWithTag("ActivePlayer");
@@ -69,13 +79,15 @@ public class Eat : MonoBehaviour
     
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Blade" || other.gameObject.tag == "Projectile") {
+            if (render.enabled == false && collider.enabled == false) {
             if(small) {
             //print("hit blade");
             StartCoroutine(ReturnNormal(playerSize, duration));
             } else {
                 SceneManager.LoadScene("ObstacleIsland");
             }
-        }
+        } else return;
+    } 
         
     }
 
@@ -118,7 +130,7 @@ public class Eat : MonoBehaviour
             
          while (i <= 1.0f) {
             i +=Time.deltaTime * playerRate;
-            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale + _playerSize / 100, i);
+            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale + _playerSize / 110, i);
             yield return null;
         } if (i >= 1.0f) {
              small = false;

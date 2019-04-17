@@ -30,9 +30,11 @@ public class Become : MonoBehaviour
     private Collider collider;
     private bool shieldActivated;
     
+    
 
     void Start()
     {
+                    actionPickup = GetComponentInParent<Pickupper>();
         actionEat = GetComponentInParent<Eat>();
         fpsCam = GetComponent<Camera>();
         firstCamPosition = GetComponent<Transform>().localPosition;
@@ -54,7 +56,10 @@ public class Become : MonoBehaviour
     }
     //we want to update every frame
     void Update()
+        
+
     {
+        
         if(shield != null) {
         if (shieldActivated) {
         render.enabled = true;
@@ -143,18 +148,25 @@ public class Become : MonoBehaviour
 //            if (!actionEat.isSmall()) {
             //call pickup function
             if(!shieldActivated){
-            actionPickup = GetComponentInParent<Pickupper>();
             actionPickup.PickUp();
             } else return;
             //}
             
         }
+//        
+//                if (Input.GetKeyDown(KeyCode.F))
+//        {
+//
+//           if(actionPickup.IsHoldingKey()) {
+//               open.openDoor();
+//           }
+//            
+//        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             //call eat function
             
-            //if (!actionEat.isSmall()) 
                 actionEat.EatFood();
 
         }
