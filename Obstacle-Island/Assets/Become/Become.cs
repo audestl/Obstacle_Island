@@ -11,7 +11,7 @@ public class Become : MonoBehaviour
     private float step = 0.0f;
 
     //camera perspective change varaibles
-    private int CamMode = 1;
+    private int CamMode = 0;
     private Vector3 thirdCamPosition;
     private Vector3 firstCamPosition;
 
@@ -149,14 +149,14 @@ public class Become : MonoBehaviour
             //become other player on left click
             CreateRay();
         }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            if (CamMode == 1)
-                CamMode = 0;
-            else
-                CamMode++;
-            StartCoroutine(CamChange());
-        }
+//        if (Input.GetKeyDown(KeyCode.C))
+//        {
+//            if (CamMode == 1)
+//                CamMode = 0;
+//            else
+//                CamMode++;
+//            StartCoroutine(CamChange());
+//        }
         if (Input.GetKeyDown(KeyCode.U))
         {
             if (actionPickup && actionPickup.IsHoldingObject())
@@ -196,13 +196,13 @@ public class Become : MonoBehaviour
                 actionEat.EatFood();
 
         }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            if (actionPickup && actionThrow && actionPickup.IsHoldingObject())
-            {
-                actionThrow.ThrowObject();
-            }
-        }
+//        if (Input.GetKeyDown(KeyCode.T))
+//        {
+//            if (actionPickup && actionThrow && actionPickup.IsHoldingObject())
+//            {
+//                actionThrow.ThrowObject();
+//            }
+//        }
         //... more actions
     }
 

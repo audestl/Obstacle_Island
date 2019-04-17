@@ -27,6 +27,7 @@ public class RigidBodyController : MonoBehaviour
         if(this.gameObject.name == "Player")
         eat = gameObject.GetComponent<Eat>();
         else eat = null;
+        start = false;
         
         characterBod = GetComponent<Rigidbody>();
         //characterBod.constraints = RigidbodyConstraints.FreezePositionY;
@@ -54,17 +55,17 @@ public class RigidBodyController : MonoBehaviour
 
         characterBod.transform.position += transform.right * direction.x;
         characterBod.transform.position += transform.forward * direction.z;
-
+    
     }
 
 
+     private bool start;
+    
     public void Rotate()
     {
-        if (Input.GetMouseButton(0))
-        {
             rotateYAxis += 3 * Input.GetAxis("Mouse X");
             rotateXAxis += 3 * Input.GetAxis("Mouse Y");
-        }
+        
         characterBod.transform.rotation = Quaternion.Euler(0, rotateYAxis, 0);
 
         Become cam = GameObject.Find("Camera_Become").GetComponent<Become>();
@@ -76,7 +77,13 @@ public class RigidBodyController : MonoBehaviour
         else
         {
             cam.gameObject.transform.rotation = Quaternion.Euler(33+ rotateXAxis, rotateYAxis, 0);
+            }
+        
+        if (Input.GetMouseButtonDown(0)) {
+            //Locomote(new Vector3(rotateXAxis, 0, rotateYAxis));
+             characterBod.transform.position += transform.forward * Time.deltaTime * speed;
         }
+
     }
     public void Jump()
     {
@@ -107,5 +114,5 @@ public class RigidBodyController : MonoBehaviour
         stairs = false;
     }
     
-
+    
 }
