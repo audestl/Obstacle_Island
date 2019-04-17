@@ -147,9 +147,7 @@ public class Become : MonoBehaviour
         {
 //            if (!actionEat.isSmall()) {
             //call pickup function
-            if(!shieldActivated){
             actionPickup.PickUp();
-            } else return;
             //}
             
         }

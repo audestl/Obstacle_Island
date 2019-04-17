@@ -37,11 +37,14 @@ public class Eat : MonoBehaviour
     private MeshRenderer render;
     private Collider collider;
     
+    private bool isChanging;
+    
     
     //Vector3 initialPos;
     
 
     void Start() {
+        isChanging = false;
         myFood = GetComponentInParent<Pickupper>();
         
           shield = GameObject.FindWithTag("Shield");
@@ -58,13 +61,16 @@ public class Eat : MonoBehaviour
         
         //initialPos = shroom.transform.position;
     }
+    
+//    void Update() {
+//        print("isChanging " + isChanging);
+//        print("isSmall " + small);
+//    }
 
     public void EatFood()
         
     { 
     
-        
-
         if (myFood.IsHoldingObject())
         {
             foodLoc = myFood.grabPoint;
@@ -75,7 +81,7 @@ public class Eat : MonoBehaviour
                 if (child.gameObject != null && eatable != null)
                 {
                 
-                    StartCoroutine(EatTheObj(child, foodSize, playerSize, duration));
+                    if (!small && !isChanging) StartCoroutine(EatTheObj(child, foodSize, playerSize, duration));
                 }
             }
         }
@@ -84,12 +90,11 @@ public class Eat : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Projectile") {
             if (render.enabled == false && collider.enabled == false) {
-            if(small) {
+            if(small && !isChanging) {
             //print("hit blade");
             StartCoroutine(ReturnNormal(playerSize, duration));
-            } else {
+            } else if (!small) {
                 this.transform.position = initialPosPlayer;
-                //myFood.grabPoint = null;
             }
         } else return;
     } 
@@ -99,14 +104,9 @@ public class Eat : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Blade") {
             if (render.enabled == false && collider.enabled == false) {
-            if(small) {
-            //print("hit blade");
-            StartCoroutine(ReturnNormal(playerSize, duration));
-            } else {
-                this.transform.position = initialPosPlayer;
-                //myFood.grabPoint = null;
+            if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration));
+             else if (!small) this.transform.position = initialPosPlayer;        
             }
-        } else return; 
         }
     }
 
@@ -133,7 +133,8 @@ public class Eat : MonoBehaviour
         {
             f += Time.deltaTime * playerRate;
 //            _obj.transform.localScale = Vector3.Lerp(_foodSize, _foodSize / 2, i);
-            if (!small) this.transform.localScale = Vector3.Lerp(transform.localScale, this.transform.localScale - _playerSize / 60, f);
+            this.transform.localScale = Vector3.Lerp(transform.localScale, this.transform.localScale - _playerSize / 60, f);
+            isChanging = true;
             yield return null;
         }
         if (f >= 1.0f)
@@ -149,12 +150,14 @@ public class Eat : MonoBehaviour
             
          while (i <= 1.0f) {
             i +=Time.deltaTime * playerRate;
-            this.transform.localScale = Vector3.Lerp(transform.localScale, this.transform.localScale + _playerSize / 110, i);
+            this.transform.localScale = Vector3.Lerp(transform.localScale, this.transform.localScale + _playerSize / 58, i);
+             
+            isChanging = true;
             yield return null;
         } if (i >= 1.0f) {
-             small = false;
+             yield return StartCoroutine(FinishGrow());
 //         _obj.gameObject.GetComponent<MeshRenderer>().enabled = true;
-         }
+         } 
     }
 
 
@@ -163,23 +166,29 @@ public class Eat : MonoBehaviour
         //_obj.GetComponent<Rigidbody>().useGravity = true;
         _obj.parent = null;
         myFood.DigestTheFood();
+        isChanging = false;
         
         //Destroy(_obj.gameObject);
         //_obj.gameObject.enabled = false;
         resetShroom(_obj.gameObject, _foodSize);
-        
-        yield return null;
         small = true;
+        yield return null;
     }
     
     public IEnumerator FinishGrow() {
-        //small = false;
+        small = false;
+        isChanging = false;
         yield return null;
     }
     
     private void resetShroom(GameObject shroom, Vector3 size) {
         shroom.transform.position = initialPos;
-        shroom.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+        shroom.transform.localScale += new Vector3(0.86f, 0.86f, 0.86f);
+    }
+    
+        
+    public bool getIsChanging() {
+        return isChanging;
     }
     
     public bool isSmall() {

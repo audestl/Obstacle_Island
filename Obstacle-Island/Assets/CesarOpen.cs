@@ -9,6 +9,8 @@ public class CesarOpen : MonoBehaviour
     
     private Pickupper actionPickup;
     public GameObject player;
+    public GameObject ColBlock;
+    private Collider col;
 
 // Smothly open a door
     public float smooth = 2.0f; //Increasing this value will make the door open faster
@@ -20,7 +22,10 @@ public class CesarOpen : MonoBehaviour
     float defaultRotationAngle;
 
     void Start()
+        
     {
+        col = ColBlock.GetComponent<Collider>();
+        col.enabled = true;
         //player = GameObject.FindWithTag("ActivePlayer");
         actionPickup = player.GetComponent<Pickupper>();
         
@@ -38,6 +43,7 @@ public class CesarOpen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F) && enter && actionPickup.hasKey())
         {
             open = !open;
+            col.enabled = false;
         } else return;
     }
 

@@ -34,7 +34,7 @@ public class Pickupper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+print(isHoldingKey);
         //if someone presses the button this parents the pickupable to the selected empty.
         if (buttonDown)
         {
@@ -48,12 +48,9 @@ public class Pickupper : MonoBehaviour
                            //foodLoc = this.grabPoint;
             foreach (Transform child in grabPoint)
                 if (child.name == "key") isHoldingKey = true;
+                else isHoldingKey = false;
             }
-            
-
-
-        } 
-        
+        }         
         
        //myFood = GetComponentInParent<Pickupper>();
         
@@ -67,10 +64,6 @@ public class Pickupper : MonoBehaviour
         if (other.transform.tag == "pickupable")
         { 
             pickups.Add(other.gameObject);
-//            if (other.gameObject.name == "key") 
-//            { isHoldingKey = true;
-//             print("heldkey");
-//            }
         }
     }
 
@@ -91,13 +84,13 @@ public class Pickupper : MonoBehaviour
     //IE Input.GetButtonDown(myButtonName) {Pickupper1.buttonCheck()}
     public void ButtonCheck()
     {
-        //print("bla");
         if (buttonDown)
         {
             buttonDown = false;
             pickup.GetComponent<Rigidbody>().useGravity = true;
             pickup.transform.parent = null;
             isHolding = false;
+            isHoldingKey = false;
             return;
         }
 

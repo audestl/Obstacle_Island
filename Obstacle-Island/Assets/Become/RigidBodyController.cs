@@ -13,16 +13,33 @@ public class RigidBodyController : MonoBehaviour
 
     private float rotateXAxis = 0.0f;
     private float rotateYAxis = 0.0f;
+    
+    private Eat eat;
 
     public bool isGrounded;
+    bool stairs;
 
+    
     // Start is called before the first frame update
     void Start()
     {
+        stairs = false;
+        if(this.gameObject.name == "Player")
+        eat = gameObject.GetComponent<Eat>();
+        else eat = null;
+        
         characterBod = GetComponent<Rigidbody>();
+        //characterBod.constraints = RigidbodyConstraints.FreezePositionY;
         rotateXAxis = characterBod.transform.eulerAngles.x;
         rotateYAxis = characterBod.transform.eulerAngles.y;
         jump = new Vector3(0.0f, 2.0f, 0.0f);
+    }
+    
+    void Update() {
+        if (eat != null) {
+        if (isGrounded && !eat.getIsChanging() && !stairs) characterBod.constraints = RigidbodyConstraints.FreezePositionY;
+    else if (eat.getIsChanging() || stairs) characterBod.constraints = RigidbodyConstraints.None;
+        }
     }
 
     public void Locomote(Vector3 direction)
@@ -62,8 +79,10 @@ public class RigidBodyController : MonoBehaviour
     }
     public void Jump()
     {
+        characterBod.constraints = RigidbodyConstraints.None;
         if (isGrounded)
         {
+            //characterBod.constraints = RigidbodyConstraints.None;
             characterBod.AddForce(jump * jumpSpeed, ForceMode.Impulse);
             isGrounded = false;
         }
@@ -76,5 +95,16 @@ public class RigidBodyController : MonoBehaviour
             isGrounded = true;
         }
     }
+    
+    void OnTriggerEnter(Collider col) {
+        if (col.name == "StairsCollider")
+           stairs = true;
+        
+    }
+    void OnTriggerExit(Collider col) {
+         if (col.name == "StairsCollider")
+        stairs = false;
+    }
+    
 
 }
