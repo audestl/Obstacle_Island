@@ -122,7 +122,10 @@ public class Eat : MonoBehaviour
             i +=Time.deltaTime * playerRate;
             player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale + _playerSize / 100, i);
             yield return null;
-        } if (i >= 1.0f) small = false;
+        } if (i >= 1.0f) {
+             small = false;
+//         _obj.gameObject.GetComponent<MeshRenderer>().enabled = true;
+         }
     }
 
 
@@ -133,6 +136,7 @@ public class Eat : MonoBehaviour
         myFood.DigestTheFood();
         
         //Destroy(_obj.gameObject);
+        //_obj.gameObject.enabled = false;
         resetShroom(_obj.gameObject, _foodSize);
         
         yield return null;
@@ -146,11 +150,10 @@ public class Eat : MonoBehaviour
     
     private void resetShroom(GameObject shroom, Vector3 size) {
         shroom.transform.position = initialPos;
-        shroom.transform.localScale += new Vector3(0.3f, 0.3f, 0.3f);
+        shroom.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
     }
     
     public bool isSmall() {
-        print(small);
         return small;
     }
    

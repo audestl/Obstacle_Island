@@ -23,7 +23,7 @@ public class Become : MonoBehaviour
     //public Spawner actionSpawn;
     private Pickupper actionPickup;
   private Eat actionEat;
-//    private Throw actionThrow;
+  private Throw actionThrow;
     
     private GameObject shield;
     private MeshRenderer render;
@@ -37,7 +37,7 @@ public class Become : MonoBehaviour
         fpsCam = GetComponent<Camera>();
         firstCamPosition = GetComponent<Transform>().localPosition;
         thirdCamPosition = firstCamPosition + new Vector3(0,5,-5);
-        //actionThrow = GetComponent<Throw>();
+        actionThrow = GetComponent<Throw>();
         
         // set the current object to ActivePlayer
         gameObject.transform.parent.tag = "ActivePlayer";
@@ -56,9 +56,13 @@ public class Become : MonoBehaviour
     void Update()
     {
         if(shield != null) {
-        if (render.enabled == true && collider.enabled == true)
-        shieldActivated = true;
-        else shieldActivated = false;
+        if (shieldActivated) {
+        render.enabled = true;
+        collider.enabled = true;
+        } else {
+        render.enabled = false;
+        collider.enabled = false; 
+            }
         }
         
         PlayerActions();
@@ -100,14 +104,10 @@ public class Become : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             if(shield != null) {
-            print(shieldActivated);
-
             if (!shieldActivated){
-            render.enabled = true;
-            collider.enabled = true;
+            shieldActivated = true;
             } else {
-            render.enabled = false;
-            collider.enabled = false; 
+            shieldActivated = false;
                 }
             }
 
@@ -137,42 +137,33 @@ public class Become : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            //call spawn function
-        }
+
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (!actionEat.isSmall()) {
+//            if (!actionEat.isSmall()) {
             //call pickup function
+            if(!shieldActivated){
             actionPickup = GetComponentInParent<Pickupper>();
             actionPickup.PickUp();
-            }
+            } else return;
+            //}
             
         }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
 
-                //call pickup function
-                actionPickup = GetComponentInParent<Pickupper>();
-                actionPickup.PickUp();
-
-
-        }
         if (Input.GetKeyDown(KeyCode.E))
         {
             //call eat function
             
-            actionEat.EatFood();
+            if (!actionEat.isSmall()) actionEat.EatFood();
 
         }
-//        if (Input.GetKeyDown(KeyCode.T))
-//        {
-//            if (actionPickup && actionThrow && actionPickup.IsHoldingObject())
-//            {
-//                actionThrow.ThrowObject();
-//            }
-//        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (actionPickup && actionThrow && actionPickup.IsHoldingObject())
+            {
+                actionThrow.ThrowObject();
+            }
+        }
         //... more actions
     }
 
