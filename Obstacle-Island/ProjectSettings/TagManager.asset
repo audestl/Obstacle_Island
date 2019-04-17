@@ -11,6 +11,7 @@ TagManager:
   - PatrolPoints
   - pickupable
   - Blade
+  - Breaker
   layers:
   - Default
   - TransparentFX

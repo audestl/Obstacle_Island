@@ -24,8 +24,9 @@ public class Protect : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-         //force is how forcefully we will push the player away from the enemy.
+         if(col.gameObject.name == "Brick") 
         col.collider.attachedRigidbody.velocity += new Vector3(-col.relativeVelocity.x, col.relativeVelocity.y);
+        print("Cold brick");
 
         }
 //    }
