@@ -11,7 +11,11 @@ TagManager:
   - PatrolPoints
   - pickupable
   - Blade
+<<<<<<< HEAD
   - Breaker
+=======
+  - ShieldTimer
+>>>>>>> 86b7cfa92d8d1a804d91f1394c35f0adbfad2f60
   layers:
   - Default
   - TransparentFX
