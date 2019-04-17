@@ -154,7 +154,8 @@ public class Become : MonoBehaviour
         {
             //call eat function
             
-            if (!actionEat.isSmall()) actionEat.EatFood();
+            //if (!actionEat.isSmall()) 
+                actionEat.EatFood();
 
         }
         if (Input.GetKeyDown(KeyCode.T))

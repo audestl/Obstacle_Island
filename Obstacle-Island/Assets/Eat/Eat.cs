@@ -93,9 +93,7 @@ public class Eat : MonoBehaviour
         {
             i += Time.deltaTime * eatingRate;
             _obj.transform.localScale = Vector3.Lerp(_foodSize, _foodSize / 100, i);
-            
-            
-//            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale - _playerSize / 100, i);
+
             yield return null;
         }
         if (i >= 1.0f)
@@ -104,7 +102,7 @@ public class Eat : MonoBehaviour
         {
             f += Time.deltaTime * playerRate;
 //            _obj.transform.localScale = Vector3.Lerp(_foodSize, _foodSize / 2, i);
-            player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale - _playerSize / 60, f);
+            if (!small) player.transform.localScale = Vector3.Lerp(transform.localScale, player.transform.localScale - _playerSize / 60, f);
             yield return null;
         }
         if (f >= 1.0f)
