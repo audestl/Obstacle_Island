@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Become : MonoBehaviour
 {
-    //camera switching variables 
+    //camera switching variables
     private Camera fpsCam;
     RaycastHit hit;
     private float clickRange = 100f;
@@ -24,29 +24,39 @@ public class Become : MonoBehaviour
     private Pickupper actionPickup;
   private Eat actionEat;
   private Throw actionThrow;
-    
+    private ShieldTimer stimer;
+    public GameObject st;
+
+
     private GameObject shield;
     private MeshRenderer render;
     private Collider collider;
     private bool shieldActivated;
-    
-    
+   
+   
+
+
 
     void Start()
-    {
-                    actionPickup = GetComponentInParent<Pickupper>();
+    {   actionPickup = GetComponentInParent<Pickupper>();
         actionEat = GetComponentInParent<Eat>();
+       
+        st = GameObject.FindWithTag("ShieldTimer");
+        stimer = st.GetComponent<ShieldTimer>();
+       
+
+
         fpsCam = GetComponent<Camera>();
         firstCamPosition = GetComponent<Transform>().localPosition;
         thirdCamPosition = firstCamPosition + new Vector3(0,5,-5);
         actionThrow = GetComponent<Throw>();
-        
+
         // set the current object to ActivePlayer
         gameObject.transform.parent.tag = "ActivePlayer";
-        
+
         //setting the audio sound component
         setAudioSource();
-        
+
     shield = GameObject.FindWithTag("Shield");
         if(shield != null) {
     render = shield.GetComponent<MeshRenderer>();
@@ -56,27 +66,43 @@ public class Become : MonoBehaviour
     }
     //we want to update every frame
     void Update()
-        
+
 
     {
-        
-        if(shield != null) {
-        if (shieldActivated) {
-        render.enabled = true;
-        collider.enabled = true;
-        } else {
-        render.enabled = false;
-        collider.enabled = false; 
+        if (!stimer.timeEqualZero())
+        {
+            if (shield != null)
+            {
+                if (shieldActivated)
+                {
+                    render.enabled = true;
+                    collider.enabled = true;
+                    stimer.playTimer();
+
+                }
+                else
+                {
+                    render.enabled = false;
+                    collider.enabled = false;
+                    stimer.stopTimer();
+                }
             }
         }
-        
+        else
+        {
+
+            render.enabled = false;
+            collider.enabled = false;
+        }
+
+
         PlayerActions();
 
         //turn the camera towards the clicked object and make sure it's a player
         if (hit.collider != null && hit.collider.gameObject.GetComponentInParent<RigidBodyController>() != null && hit.collider.gameObject.tag == "Player")
         {
             Vector3 direction = hit.collider.gameObject.transform.position - transform.position;
-        
+
             if (direction != Vector3.zero)
             {
                 Quaternion endRotation = Quaternion.LookRotation(direction);
@@ -104,8 +130,8 @@ public class Become : MonoBehaviour
         {
             controller.Jump();
         }
-        
-              // KeyCode for Marie-Eve and Audrey's milestone      
+
+              // KeyCode for Marie-Eve and Audrey's milestone
         if (Input.GetKeyDown(KeyCode.M))
         {
             if(shield != null) {
@@ -147,24 +173,26 @@ public class Become : MonoBehaviour
         {
 //            if (!actionEat.isSmall()) {
             //call pickup function
+            if(!shieldActivated){
             actionPickup.PickUp();
+            } else return;
             //}
-            
+
         }
-//        
+//
 //                if (Input.GetKeyDown(KeyCode.F))
 //        {
 //
 //           if(actionPickup.IsHoldingKey()) {
 //               open.openDoor();
 //           }
-//            
+//
 //        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
             //call eat function
-            
+
                 actionEat.EatFood();
 
         }
@@ -219,17 +247,17 @@ public class Become : MonoBehaviour
     IEnumerator SwitchCameraDelay(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        //code executes after the waitTime is elapsed 
+        //code executes after the waitTime is elapsed
         SwitchCameras();
     }
-   
+
 
     private void SwitchCameras()
     {
         //instantiate a new camera at the position of the object that was clicked on
         Become clickedObject = Instantiate(this, hit.collider.gameObject.transform.position, Quaternion.identity);
         clickedObject.gameObject.name = "Camera_Become";
-    
+
         //Set the new object to ActivePlayer tag
         hit.collider.transform.gameObject.tag = "ActivePlayer";
         //The other object loses its ActivePlayer tag
@@ -238,7 +266,7 @@ public class Become : MonoBehaviour
         //make the camera a chid of the clicked game object and center its position relative to the player
         clickedObject.transform.SetParent(hit.collider.gameObject.transform);
         clickedObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-     
+
         //Destroy the old camera.
         Destroy(gameObject);
     }
@@ -264,7 +292,7 @@ public class Become : MonoBehaviour
 
     private void PlaySoundFx()
     {
-        //play the sound fx        
+        //play the sound fx
         audioSource.PlayOneShot(swapSound, 0.8f);
     }
 
