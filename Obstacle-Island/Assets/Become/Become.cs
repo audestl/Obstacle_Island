@@ -24,6 +24,8 @@ public class Become : MonoBehaviour
     private Pickupper actionPickup;
   private Eat actionEat;
   private Throw actionThrow;
+    private ShieldTimer stimer;
+    public GameObject st;
 
 
     private GameObject shield;
@@ -31,13 +33,18 @@ public class Become : MonoBehaviour
     private Collider collider;
     private bool shieldActivated;
    
+   
 
 
 
     void Start()
-    {
-                    actionPickup = GetComponentInParent<Pickupper>();
+    {   actionPickup = GetComponentInParent<Pickupper>();
         actionEat = GetComponentInParent<Eat>();
+       
+        st = GameObject.FindWithTag("ShieldTimer");
+        stimer = st.GetComponent<ShieldTimer>();
+       
+
 
         fpsCam = GetComponent<Camera>();
         firstCamPosition = GetComponent<Transform>().localPosition;
@@ -62,16 +69,32 @@ public class Become : MonoBehaviour
 
 
     {
+        if (!stimer.timeEqualZero())
+        {
+            if (shield != null)
+            {
+                if (shieldActivated)
+                {
+                    render.enabled = true;
+                    collider.enabled = true;
+                    stimer.playTimer();
 
-        if(shield != null) {
-        if (shieldActivated) {
-        render.enabled = true;
-        collider.enabled = true;
-        } else {
-        render.enabled = false;
-        collider.enabled = false;
+                }
+                else
+                {
+                    render.enabled = false;
+                    collider.enabled = false;
+                    stimer.stopTimer();
+                }
             }
         }
+        else
+        {
+
+            render.enabled = false;
+            collider.enabled = false;
+        }
+
 
         PlayerActions();
 
@@ -150,7 +173,9 @@ public class Become : MonoBehaviour
         {
 //            if (!actionEat.isSmall()) {
             //call pickup function
+            if(!shieldActivated){
             actionPickup.PickUp();
+            } else return;
             //}
 
         }

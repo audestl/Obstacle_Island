@@ -5,9 +5,11 @@ using UnityEngine.UI;
 public class ShieldTimer : MonoBehaviour
 {
     Image fillImg;
-    float timeAmt = 10;
+    float timeAmt = 20;
     float time;
     private bool isTicking;
+    private bool isTimeOver;
+
 
     // Use this for initialization
     void Start()
@@ -15,28 +17,44 @@ public class ShieldTimer : MonoBehaviour
         isTicking = false;
         fillImg = this.GetComponent<Image>();
         time = timeAmt;
+        isTimeOver = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (time > 0)
+        if (isTicking)
         {
-            time -= Time.deltaTime;
-            fillImg.fillAmount = time / timeAmt;
-            isTicking = true;
+            if (time > 0)
+            {
+                time -= Time.deltaTime;
+                fillImg.fillAmount = time / timeAmt;
+
+            }
+            else
+                isTimeOver = true;
         }
-        else
-            isTicking = false;
+       
     }
 
 
-    void playTimer()
+    public void playTimer()
     {
+        isTicking = true;
         FixedUpdate();
+    }
+
+    public void stopTimer()
+    {
+        isTicking = false;
+    }
+
+    public bool timeEqualZero()
+    {
+        return isTimeOver;
     }
 }
 
 
 // Code reuse from http://aarlangdi.blogspot.com/2016/02/making-health-bar-in-unity-5-radial.html
-// Added isTicking variable to keep track of the Timer being on.
+// Added playTimer(), stopTimer() and timeEqualZero()

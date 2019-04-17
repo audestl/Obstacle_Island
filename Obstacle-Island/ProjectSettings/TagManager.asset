@@ -11,6 +11,7 @@ TagManager:
   - PatrolPoints
   - pickupable
   - Blade
+  - ShieldTimer
   layers:
   - Default
   - TransparentFX
