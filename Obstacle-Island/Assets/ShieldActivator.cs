@@ -136,11 +136,11 @@ public bool shieldIsOn() {
         if (other.gameObject.tag == "ShieldToken") {
             index++;
             shieldActivated = true;
-            if (index == 1) StartCoroutine(StartCountdown(8, "Press 'm' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
+            if (index == 1) StartCoroutine(StartCountdown(8, "Press 'M' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
         }  else if (other.name == "eatCollide") {
 //                StartCoroutine(StartCountdown(8, "Press 'p' on your keyboard to pick-up the mushroom, and 'e' to eat it.")); 
                     shieldText.enabled = true;
-                    shieldText.text = "Press 'p' on your keyboard to pick-up the mushroom, and 'e' to eat it.";
+                    shieldText.text = "Press 'P' on your keyboard to pick-up the mushroom, and 'e' to eat it.";
                 } else if (other.name == "Portal") {
                     shieldText.enabled = true;
                     shieldText.text = "Congratulations! You have finished this level.";

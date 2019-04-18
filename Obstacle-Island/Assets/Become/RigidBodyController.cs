@@ -18,11 +18,15 @@ public class RigidBodyController : MonoBehaviour
 
     public bool isGrounded;
     bool stairs;
+    
+    private Animator animator;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        
+        animator = GetComponent<Animator> ();
         stairs = false;
         if(this.gameObject.name == "Player")
         eat = gameObject.GetComponent<Eat>();
