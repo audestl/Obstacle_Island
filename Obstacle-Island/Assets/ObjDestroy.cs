@@ -17,7 +17,7 @@ public class ObjDestroy : MonoBehaviour
     }
     
     private void Update() {
-        print(active);
+        //print(active);
     }
     
         public void OnCollisionEnter(Collision col) {

@@ -33,7 +33,7 @@ public class Eat : MonoBehaviour
     public GameObject initialObj;
     public GameObject initialPlayer;
     
-    private GameObject shield;
+    //private GameObject shield;
     private MeshRenderer render;
     private Collider collider;
     
@@ -48,9 +48,9 @@ public class Eat : MonoBehaviour
         isChanging = false;
         myFood = GetComponentInParent<Pickupper>();
         
-          shield = GameObject.FindWithTag("Shield");
-    render = shield.GetComponent<MeshRenderer>();
-    collider = shield.GetComponent<Collider>();
+//          shield = GameObject.FindWithTag("Shield");
+//    render = shield.GetComponent<MeshRenderer>();
+//    collider = shield.GetComponent<Collider>();
         
         //playerSize = player.transform.localScale;
         small = false;
@@ -95,10 +95,23 @@ public class Eat : MonoBehaviour
             
             if (render.enabled == false && collider.enabled == false) {
             if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration)); 
-            else if (!small) this.transform.position = initialPosPlayer;
+            else if (!small) SceneManager.LoadScene("MainScene");
              
             } else return;
         } 
+    }
+    
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.name == "fireCollide") {
+            print("collide fire");
+            
+            if (render.enabled == false && collider.enabled == false) {
+            if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration)); 
+            else if (!small) SceneManager.LoadScene("MainScene");
+             
+            } else return;
+        }
+        
     }
 //    
 //    private void OnCollisionEnter(Collision other) {

@@ -11,7 +11,7 @@ public class Become : MonoBehaviour
     private float step = 0.0f;
 
     //camera perspective change varaibles
-    private int CamMode = 0;
+    private int CamMode = 1;
     private Vector3 thirdCamPosition;
     private Vector3 firstCamPosition;
 
@@ -22,8 +22,8 @@ public class Become : MonoBehaviour
     //Action Scripts
     //public Spawner actionSpawn;
     private Pickupper actionPickup;
-  private Eat actionEat;
-  private Throw actionThrow;
+    private Eat actionEat;
+    private Throw actionThrow;
     private ShieldTimer stimer;
     public GameObject st;
 
@@ -32,19 +32,17 @@ public class Become : MonoBehaviour
     private MeshRenderer render;
     private Collider collider;
     private bool shieldActivated;
-   
-   
-
+    private ShieldActivator actionShield;
 
 
     void Start()
     {   actionPickup = GetComponentInParent<Pickupper>();
         actionEat = GetComponentInParent<Eat>();
+       actionShield = GetComponentInParent<ShieldActivator>();
        
         st = GameObject.FindWithTag("ShieldTimer");
         stimer = st.GetComponent<ShieldTimer>();
        
-
 
         fpsCam = GetComponent<Camera>();
         firstCamPosition = GetComponent<Transform>().localPosition;
@@ -54,46 +52,47 @@ public class Become : MonoBehaviour
         // set the current object to ActivePlayer
         gameObject.transform.parent.tag = "ActivePlayer";
 
-        //setting the audio sound component
-        setAudioSource();
-
     shield = GameObject.FindWithTag("Shield");
-        if(shield != null) {
-    render = shield.GetComponent<MeshRenderer>();
-    collider = shield.GetComponent<Collider>();
-    shieldActivated = false;
-        }
+
+    //shieldOff = shield.GetComponent<ShieldActivator>();
+//    if(shield != null) {
+//    render = shield.GetComponent<MeshRenderer>();
+//    collider = shield.GetComponent<Collider>();
+//    shieldActivated = false;
+//        }
     }
     //we want to update every frame
     void Update()
 
-
     {
-        if (!stimer.timeEqualZero())
-        {
-            if (shield != null)
-            {
-                if (shieldActivated)
-                {
-                    render.enabled = true;
-                    collider.enabled = true;
-                    stimer.playTimer();
-
-                }
-                else
-                {
-                    render.enabled = false;
-                    collider.enabled = false;
-                    stimer.stopTimer();
-                }
-            }
-        }
-        else
-        {
-
-            render.enabled = false;
-            collider.enabled = false;
-        }
+        
+        //print(actionShield.collectedShield());
+        
+        //print(shieldActivated);
+        
+//       if(actionShield.collectedShield()) {
+//        if (!stimer.timeEqualZero()) {
+//                if (shieldActivated)
+//                {
+//                    render.enabled = true;
+//                    collider.enabled = true;
+//                    stimer.playTimer();
+//
+//                }
+//                else
+//                {
+//                    render.enabled = false;
+//                    collider.enabled = false;
+//                    stimer.stopTimer();
+//                }
+//        }
+//        else {
+//
+//            //actionShield.iconAvailable();
+//            render.enabled = false;
+//            collider.enabled = false;
+//        }
+//       }
 
 
         PlayerActions();
@@ -132,50 +131,51 @@ public class Become : MonoBehaviour
         }
 
               // KeyCode for Marie-Eve and Audrey's milestone
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            if(shield != null) {
-            if (!shieldActivated){
-            shieldActivated = true;
-            } else {
-            shieldActivated = false;
-                }
-            }
-
-        }
+//        if (Input.GetKeyDown(KeyCode.M))
+//        {
+//            if(actionShield.collectedShield()) {
+//            if (!shieldActivated){
+//            shieldActivated = true;
+//            actionPickup.dropIt();          
+//            } else {
+//            shieldActivated = false;
+//                }
+//            } else return;
+//
+//        }
 
         if (Input.GetMouseButtonDown(0))
         {
             //become other player on left click
             CreateRay();
         }
-//        if (Input.GetKeyDown(KeyCode.C))
-//        {
-//            if (CamMode == 1)
-//                CamMode = 0;
-//            else
-//                CamMode++;
-//            StartCoroutine(CamChange());
-//        }
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            if (actionPickup && actionPickup.IsHoldingObject())
-            {
-                Usable usable = actionPickup.HeldObject().GetComponent<Usable>();
-                if (usable)
-                {
-                    usable.Use();
-                }
-            }
+            if (CamMode == 1)
+                CamMode = 0;
+            else
+                CamMode++;
+            StartCoroutine(CamChange());
         }
+//        if (Input.GetKeyDown(KeyCode.U))
+//        {
+//            if (actionPickup && actionPickup.IsHoldingObject())
+//            {
+//                Usable usable = actionPickup.HeldObject().GetComponent<Usable>();
+//                if (usable)
+//                {
+//                    usable.Use();
+//                }
+//            }
+//        }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
 //            if (!actionEat.isSmall()) {
             //call pickup function
-            if(!shieldActivated){
-            actionPickup.PickUp();
-            } else return;
+
+                actionPickup.PickUp();
+            
             //}
 
         }
@@ -198,8 +198,9 @@ public class Become : MonoBehaviour
         }
 //        if (Input.GetKeyDown(KeyCode.T))
 //        {
-//            if (actionPickup && actionThrow && actionPickup.IsHoldingObject())
+//            if (actionPickup.IsHoldingObject())
 //            {
+//                print("throw");
 //                actionThrow.ThrowObject();
 //            }
 //        }

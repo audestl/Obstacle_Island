@@ -27,21 +27,20 @@ public class RigidBodyController : MonoBehaviour
         if(this.gameObject.name == "Player")
         eat = gameObject.GetComponent<Eat>();
         else eat = null;
-        start = false;
         
         characterBod = GetComponent<Rigidbody>();
         //characterBod.constraints = RigidbodyConstraints.FreezePositionY;
         rotateXAxis = characterBod.transform.eulerAngles.x;
         rotateYAxis = characterBod.transform.eulerAngles.y;
         jump = new Vector3(0.0f, 2.0f, 0.0f);
-        characterBod.constraints = RigidbodyConstraints.FreezePositionY;
+
     }
     
     void Update() {
-        if (eat != null) {
-        if (isGrounded && !eat.getIsChanging() && !stairs) characterBod.constraints = RigidbodyConstraints.FreezePositionY;
-    else if (eat.getIsChanging() || stairs) characterBod.constraints = RigidbodyConstraints.None;
-        }
+        //if (eat != null) {
+//        if (!eat.getIsChanging() && !stairs) characterBod.constraints = RigidbodyConstraints.FreezePositionY;
+//    else if (eat.getIsChanging() || stairs) characterBod.constraints = RigidbodyConstraints.None;
+//        }
     }
 
     public void Locomote(Vector3 direction)
@@ -58,8 +57,6 @@ public class RigidBodyController : MonoBehaviour
     
     }
 
-
-     private bool start;
     
     public void Rotate()
     {
@@ -78,16 +75,11 @@ public class RigidBodyController : MonoBehaviour
         {
             cam.gameObject.transform.rotation = Quaternion.Euler(33+ rotateXAxis, rotateYAxis, 0);
             }
-        
-        if (Input.GetMouseButtonDown(0)) {
-            //Locomote(new Vector3(rotateXAxis, 0, rotateYAxis));
-             characterBod.transform.position += transform.forward * Time.deltaTime * speed;
         }
 
-    }
     public void Jump()
     {
-        characterBod.constraints = RigidbodyConstraints.None;
+//        characterBod.constraints = RigidbodyConstraints.None;
         if (isGrounded)
         {
             //characterBod.constraints = RigidbodyConstraints.None;

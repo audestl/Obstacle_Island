@@ -45,7 +45,7 @@ public class CesarOpen : MonoBehaviour
     {
         if (enter)
         {
-            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height - 100, 300, 50), "Press 'F' to open the door if you have the key");
+            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 100, 300, 50), "Press 'F' to open the door if you have the key");
         }
     }
 
