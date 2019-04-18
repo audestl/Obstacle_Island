@@ -12,7 +12,7 @@ public class ShieldActivator : MonoBehaviour
     int index;
     
     private ShieldTimer stimer;
-    public GameObject st;
+    //public GameObject st;
     
    private bool shieldOn; 
    private bool shieldActivated;
@@ -25,6 +25,10 @@ public class ShieldActivator : MonoBehaviour
     private MeshRenderer render;
     private Collider collider;
     
+    private GameObject clone;
+    public GameObject prefab;
+    public GameObject pos;
+    
         private void Start() {
                // timer
             
@@ -35,7 +39,7 @@ public class ShieldActivator : MonoBehaviour
             
         shieldActivated = false;
         index = 0;
-        icon = GameObject.Find("ShieldIcon");
+        icon = GameObject.Find("shieldToken");
             
         shieldText.enabled = false;
         shieldText.text = "";
@@ -47,8 +51,8 @@ public class ShieldActivator : MonoBehaviour
     }
     
     private void Update() {
-        print("shieldOn:" + shieldOn);
-        print("shieldActivated: " + shieldActivated);
+//        print("shieldOn:" + shieldOn);
+//        print("shieldActivated: " + shieldActivated);
         
         
         //shieldOn = WITH M
@@ -70,7 +74,7 @@ public class ShieldActivator : MonoBehaviour
                 }
         }
         else {
-
+            stimer.resetTimer();
             shieldActivated = false;
             render.enabled = false;
             collider.enabled = false;
@@ -81,6 +85,7 @@ public class ShieldActivator : MonoBehaviour
                     timer.enabled = true;
                     icon.GetComponent<MeshRenderer>().enabled = false;
                     icon.GetComponent<Collider>().enabled = false;
+                    
         if (Input.GetKeyDown(KeyCode.M))
         {
             if (!shieldOn){
@@ -94,12 +99,10 @@ public class ShieldActivator : MonoBehaviour
               } else {
         
                     shieldOn = false;
+                    timer.enabled = false;
                     icon.GetComponent<MeshRenderer>().enabled = true;
-                    icon.GetComponent<Collider>().enabled = true;
-                    
-                }
-                  
-                  
+                    icon.GetComponent<Collider>().enabled = true;                 
+                }                            
        }
     
     
@@ -107,29 +110,26 @@ public class ShieldActivator : MonoBehaviour
 public bool collectedShield() {
     return shieldOn;
 }
-    
-    public void iconAvailable(GameObject _icon) {  
-        if(!shieldOn){
-        _icon.SetActive(true);    
-        _icon.GetComponent<MeshRenderer>().enabled = true;
-        _icon.GetComponent<Collider>().enabled = true;
-        timer.enabled = false;
-        shieldOn = true;
-        } else {
-            shieldOn = false;
-            _icon.gameObject.SetActive(false);
-            timer.enabled = true;
-             if (index == 1) StartCoroutine(StartCountdown(8, "Press 'm' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
-        }
-    }
+//    
+//    public void iconAvailable(GameObject _icon) {  
+//        if(!shieldOn){
+//        _icon.SetActive(true);    
+//        _icon.GetComponent<MeshRenderer>().enabled = true;
+//        _icon.GetComponent<Collider>().enabled = true;
+//        timer.enabled = false;
+//        shieldOn = true;
+//        } else {
+//            shieldOn = false;
+//            _icon.gameObject.SetActive(false);
+//            timer.enabled = true;
+//             if (index == 1) StartCoroutine(StartCountdown(8, "Press 'm' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
+//        }
+//    }
         
             private void OnTriggerEnter(Collider other) {
-        if (other.name == "ShieldIcon") {
-            print("collide");
-            if(!shieldActivated) shieldActivated = true;
-            Destroy(other.gameObject);
-            //other.gameObject.GetComponent<MeshRenderer>().enabled = false;
-//            StartCoroutine(StartCountdown(8, "Press 'm' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
+        if (other.gameObject.tag == "ShieldToken") {
+            shieldActivated = true;
+            StartCoroutine(StartCountdown(8, "Press 'm' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
         } 
      else if (other.name == "eatCollide") {
 //                StartCoroutine(StartCountdown(8, "Press 'p' on your keyboard to pick-up the mushroom, and 'e' to eat it.")); 

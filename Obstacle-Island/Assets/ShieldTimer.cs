@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -34,7 +34,14 @@ public class ShieldTimer : MonoBehaviour
             else
                 isTimeOver = true;
         }
+        print(time);
        
+    }
+    
+    public void resetTimer(){
+        //time = 0;
+        isTimeOver = false;
+        time = timeAmt;
     }
 
 
