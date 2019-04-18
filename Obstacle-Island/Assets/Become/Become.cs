@@ -174,7 +174,7 @@ public class Become : MonoBehaviour
 //            if (!actionEat.isSmall()) {
             //call pickup function
 
-                actionPickup.PickUp();
+               if(!actionShield.shieldIsOn()) actionPickup.PickUp();
             
             //}
 

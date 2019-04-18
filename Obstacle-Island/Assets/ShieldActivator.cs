@@ -8,8 +8,9 @@ public class ShieldActivator : MonoBehaviour
     //private bool shieldOn; 
     public Image timer;
     public Text shieldText;
-    float currCountdownValue;
-    int index;
+    private string keyText;
+    private float currCountdownValue;
+    private int index;
     
     private ShieldTimer stimer;
     //public GameObject st;
@@ -29,6 +30,9 @@ public class ShieldActivator : MonoBehaviour
     public GameObject prefab;
     public GameObject pos;
     
+    private CesarOpen door;
+    
+    
         private void Start() {
                // timer
             
@@ -37,11 +41,15 @@ public class ShieldActivator : MonoBehaviour
     collider = shield.GetComponent<Collider>();
     actionPickup = GetComponent<Pickupper>();
             
+        //finished = GameObject.Find("Portal").GetComponent<GameOver>();
+        door = GameObject.Find("Door").GetComponent<CesarOpen>();
+            
         shieldActivated = false;
         index = 0;
         icon = GameObject.Find("shieldToken");
             
         shieldText.enabled = false;
+        //keyText.enabled = false;
         shieldText.text = "";
             
                    
@@ -51,13 +59,11 @@ public class ShieldActivator : MonoBehaviour
     }
     
     private void Update() {
-//        print("shieldOn:" + shieldOn);
-//        print("shieldActivated: " + shieldActivated);
+            
+           if(actionPickup.hasKey()) keyText = "Press 'F' to open the door";
+            else keyText = "You need a key to open this door";
         
-        
-        //shieldOn = WITH M
-        //shieldActivated = OVERALL
-        
+
                 if (!stimer.timeEqualZero()) {
                 if (shieldOn)
                 {
@@ -107,7 +113,7 @@ public class ShieldActivator : MonoBehaviour
     
     
     
-public bool collectedShield() {
+public bool shieldIsOn() {
     return shieldOn;
 }
 //    
@@ -128,10 +134,10 @@ public bool collectedShield() {
         
             private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "ShieldToken") {
+            index++;
             shieldActivated = true;
-            StartCoroutine(StartCountdown(8, "Press 'm' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
-        } 
-     else if (other.name == "eatCollide") {
+            if (index == 1) StartCoroutine(StartCountdown(8, "Press 'm' on your keyboard to activate your shield. Be careful, its lifespan is very limited!"));
+        }  else if (other.name == "eatCollide") {
 //                StartCoroutine(StartCountdown(8, "Press 'p' on your keyboard to pick-up the mushroom, and 'e' to eat it.")); 
                     shieldText.enabled = true;
                     shieldText.text = "Press 'p' on your keyboard to pick-up the mushroom, and 'e' to eat it.";
@@ -141,14 +147,17 @@ public bool collectedShield() {
                 } else if (other.name == "keyCollide") {
                     shieldText.enabled = true;
                     shieldText.text = "Be careful, you cannot activate your shield when you are holding an object...";
-                }
+                }  else if (other.name == "doorCollide") {
+            // stops nearby text from changing
+            if(!door.isOpen()) {
+                    shieldText.enabled = true;
+                    shieldText.text = keyText;
+            }
+        }
     }
     
     private void OnTriggerExit(Collider other) {
-         if (other.name == "eatCollide") {
-             shieldText.enabled = false;
-             
-         } else if (other.name == "keyCollide") {
+         if (other.name == "eatCollide" || other.name == "keyCollide" || other.name == "doorCollide") {
              shieldText.enabled = false;
          }
     }

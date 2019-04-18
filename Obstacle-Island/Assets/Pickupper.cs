@@ -25,10 +25,10 @@ public class Pickupper : MonoBehaviour
     
     private ObjDestroy script;
     //private GameObject shield;
-    private MeshRenderer render;
-    private Collider collider;
-    
-    // private ShieldActivator shieldOn;
+//    private MeshRenderer render;
+//    private Collider collider;
+//    
+    private ShieldActivator actionShield;
     
     // Start is called before the first frame update
     void Start()
@@ -36,6 +36,8 @@ public class Pickupper : MonoBehaviour
 //    shield = GameObject.FindWithTag("Shield");
 //    render = shield.GetComponent<MeshRenderer>();
 //    collider = shield.GetComponent<Collider>();
+        
+        actionShield = GetComponentInParent<ShieldActivator>();
         
         inRange = false;
         buttonDown = false;
@@ -152,7 +154,7 @@ public class Pickupper : MonoBehaviour
 
         if(pickups.Count == 1 && buttonDown == false)
         {
-            if (collider.enabled == false && render.enabled == false) {         
+            if(!actionShield.shieldIsOn()) {         
             pickup = pickups[0];
             buttonDown = true;
             inRange = true;

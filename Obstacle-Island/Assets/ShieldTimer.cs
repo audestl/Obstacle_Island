@@ -34,7 +34,6 @@ public class ShieldTimer : MonoBehaviour
             else
                 isTimeOver = true;
         }
-        print(time);
        
     }
     

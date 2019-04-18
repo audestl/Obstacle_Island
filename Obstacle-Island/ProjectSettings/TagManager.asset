@@ -11,6 +11,7 @@ TagManager:
   - Shield
   - ShieldTimer
   - ActivePlayer
+  - ShieldToken
   layers:
   - Default
   - TransparentFX

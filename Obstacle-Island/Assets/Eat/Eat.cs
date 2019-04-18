@@ -34,23 +34,26 @@ public class Eat : MonoBehaviour
     public GameObject initialPlayer;
     
     //private GameObject shield;
-    private MeshRenderer render;
-    private Collider collider;
+//    private MeshRenderer render;
+//    private Collider collider;
     
     private ObjDestroy script;
     
     private bool isChanging;
     
-    //Vector3 initialPos;
+    private ShieldActivator actionShield;
+
     
 
     void Start() {
         isChanging = false;
         myFood = GetComponentInParent<Pickupper>();
         
-//          shield = GameObject.FindWithTag("Shield");
+//    shield = GameObject.FindWithTag("Shield");
 //    render = shield.GetComponent<MeshRenderer>();
 //    collider = shield.GetComponent<Collider>();
+        
+        actionShield = GetComponentInParent<ShieldActivator>();
         
         //playerSize = player.transform.localScale;
         small = false;
@@ -93,7 +96,7 @@ public class Eat : MonoBehaviour
         
         if ((other.gameObject.tag == "Projectile" && script.objIsActive()) || other.gameObject.tag == "Blade") {
             
-            if (render.enabled == false && collider.enabled == false) {
+            if(!actionShield.shieldIsOn()) {
             if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration)); 
             else if (!small) SceneManager.LoadScene("MainScene");
              
@@ -105,7 +108,7 @@ public class Eat : MonoBehaviour
         if (other.gameObject.name == "fireCollide") {
             print("collide fire");
             
-            if (render.enabled == false && collider.enabled == false) {
+            if(!actionShield.shieldIsOn()) {
             if(small && !isChanging) StartCoroutine(ReturnNormal(playerSize, duration)); 
             else if (!small) SceneManager.LoadScene("MainScene");
              

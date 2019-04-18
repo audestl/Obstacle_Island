@@ -18,6 +18,7 @@ public class CesarOpen : MonoBehaviour
     bool enter = false;
 
     float defaultRotationAngle;
+    string textString;
 
     void Start()
     {
@@ -40,13 +41,9 @@ public class CesarOpen : MonoBehaviour
             open = !open;
         } else return;
     }
-
-    void OnGUI()
-    {
-        if (enter)
-        {
-            GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 100, 300, 50), "Press 'F' to open the door if you have the key");
-        }
+    
+    public bool isOpen() {
+        return open;
     }
 
     //Activate the Main function when player is near the door
